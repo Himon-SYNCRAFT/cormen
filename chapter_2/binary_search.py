@@ -2,6 +2,9 @@ def binary_search(sorted_collection, value):
     """
     Return index if find value in sorted_collection. If not return None
     """
+    if not sorted_collection:
+        return None
+
     if len(sorted_collection) == 1:
         if value == sorted_collection[0]:
             return 0
@@ -23,6 +26,7 @@ def binary_search(sorted_collection, value):
 
 if __name__ == "__main__":
 
+    assert binary_search([], 1) == None
     assert binary_search([1,2,3,4,5], 1) == 0
     assert binary_search([1,2,3,4,5], 2) == 1
     assert binary_search([1,2,3,4,5], 3) == 2
