@@ -1,66 +1,79 @@
 from random import sample
 
 def merge(collection, start, mid, end):
-    left = collection[start: mid]
-    right = collection[mid: end + 1]
-    tmp_collection = []
 
-    left_index = 0
-    right_index = 0
+    left = collection[start : mid + 1]
+    right = collection[mid + 1 : end + 1]
 
-    while left_index != len(left) and right_index != len(right):
-        if left[left_index] <= right[right_index]:
-            tmp_collection.append(left[left_index])
-            left_index += 1
+    index = start
+
+    while left and right:
+        if left[0] <= right[0]:
+            collection[index] = left.pop(0)
         else:
-            tmp_collection.append(right[right_index])
-            right_index += 1
+            collection[index] = right.pop(0)
 
-    if len(left) > left_index:
-        tmp_collection.extend(left[left_index:])
+        index += 1
 
-    if len(right) > right_index:
-        tmp_collection.extend(right[right_index:])
+    if left:
+        for i in range(index, index + len(left)):
+            collection[i] = left.pop(0)
 
-    tmp_collection.reverse()
-
-    for i in range(start, end + 1):
-        collection[i] = tmp_collection.pop()
+    if right:
+        for i in range(index, index + len(right)):
+            collection[i] = right.pop(0)
 
 
 def merge_sort(collection, start, end):
+
     if start < end:
-        mid = start + ((end - start) // 2)
+        mid = start + (end - start) // 2
         merge_sort(collection, start, mid)
         merge_sort(collection, mid + 1, end)
-        merge(collection, start, mid + 1, end)
+        merge(collection, start, mid, end)
 
 
 if __name__ == "__main__":
 
     collection = [5, 4, 3, 2, 1]
-    merge(collection, 0, len(collection) // 2, len(collection) - 1)
-    assert collection == [3, 2, 1, 5, 4]
+    merge_sort(collection, 0, len(collection) - 1)
+    assert collection == [1, 2, 3, 4, 5]
 
-    collection = [1, 5, 2, 4, 3, 0]
-    merge(collection, 0, len(collection) // 2, len(collection)  - 1)
-    assert collection == [1, 4, 3, 0, 5, 2]
+    collection = []
+    merge_sort(collection, 0, len(collection) - 1)
+    assert collection == []
 
-    collection = [1, 1]
-    merge(collection, 0, len(collection) // 2, len(collection)  - 1)
-    assert collection == [1, 1]
+    collection = [5]
+    merge_sort(collection, 0, len(collection) - 1)
+    assert collection == [5]
+
+    collection = [1, 2, 3, 4, 5]
+    merge_sort(collection, 0, len(collection) - 1)
+    assert collection == [1, 2, 3, 4, 5]
+
+    collection = [ -1, -2, -3, -4, -5]
+    merge_sort(collection, 0, len(collection) - 1)
+    assert collection == [-5, -4, -3, -2, -1]
+
+    collection = [5.1, 4.2, 3.3, 2.4, 1.5]
+    merge_sort(collection, 0, len(collection) - 1)
+    assert collection == [1.5, 2.4, 3.3, 4.2, 5.1]
+
+    collection = [1, 2, 3, 4, 5]
+    merge(collection, 0, (len(collection) - 1) // 2, len(collection) - 1)
+    assert collection == [1, 2, 3, 4, 5]
+
+    collection = [5, 4, 3, 2, 1]
+    merge(collection, 0, (len(collection) - 1) // 2, len(collection) - 1)
+    assert collection == [2, 1, 5, 4, 3]
+
+    collection = []
+    merge(collection, 0, (len(collection) - 1) // 2, len(collection) - 1)
+    assert collection == []
 
     collection = [1]
-    merge(collection, 0, len(collection) // 2, len(collection)  - 1)
+    merge(collection, 0, (len(collection) - 1) // 2, len(collection) - 1)
     assert collection == [1]
-
-    collection = [5, 4, 3, 2, 1]
-    merge_sort(collection, 0, len(collection) - 1)
-    assert collection == [1, 2, 3, 4, 5]
-
-    collection = [5, 4, 3, 2, 1]
-    merge_sort(collection, 0, len(collection) - 1)
-    assert collection == [1, 2, 3, 4, 5]
 
     for i in range(1000):
         l = sample(range(1000), 10)
