@@ -41,23 +41,23 @@ if __name__ == "__main__":
     collection = [5, 4, 3, 2, 1]
     merge_sort(collection, 0, len(collection) - 1)
     assert collection == [1, 2, 3, 4, 5]
-    
+
     collection = []
     merge_sort(collection, 0, len(collection) - 1)
     assert collection == []
-    
+
     collection = [5]
     merge_sort(collection, 0, len(collection) - 1)
     assert collection == [5]
-    
+
     collection = [1, 2, 3, 4, 5]
     merge_sort(collection, 0, len(collection) - 1)
     assert collection == [1, 2, 3, 4, 5]
-    
+
     collection = [ -1, -2, -3, -4, -5]
     merge_sort(collection, 0, len(collection) - 1)
     assert collection == [-5, -4, -3, -2, -1]
-    
+
     collection = [5.1, 4.2, 3.3, 2.4, 1.5]
     merge_sort(collection, 0, len(collection) - 1)
     assert collection == [1.5, 2.4, 3.3, 4.2, 5.1]
