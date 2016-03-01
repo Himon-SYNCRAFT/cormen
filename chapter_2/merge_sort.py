@@ -1,6 +1,10 @@
 from random import sample
 
 def merge(collection, start, mid, end):
+    """
+    Core function for Merge Sort algorithm. Merging two collections into one in
+    ascending order.
+    """
 
     left = collection[start : mid + 1]
     right = collection[mid + 1 : end + 1]
@@ -18,19 +22,27 @@ def merge(collection, start, mid, end):
 
         index += 1
 
-    if left:
-        for i in range(index, index + len(left)):
-            collection[i] = left.pop()
+    while left:
+        collection[index] = left.pop()
+        index += 1
 
-    if right:
-        for i in range(index, index + len(right)):
-            collection[i] = right.pop()
+    while right:
+        collection[index] = right.pop()
+        index += 1
 
 
-def merge_sort(collection, start, end):
+def merge_sort(collection, start=None, end=None):
+    """
+    Sorting collection using merge sort algorithm.
+    """
+
+    if start is None or end is None:
+        start = 0
+        end = len(collection) - 1
 
     if start < end:
         mid = start + (end - start) // 2
+
         merge_sort(collection, start, mid)
         merge_sort(collection, mid + 1, end)
         merge(collection, start, mid, end)
@@ -38,45 +50,45 @@ def merge_sort(collection, start, end):
 
 if __name__ == "__main__":
 
-    collection = [5, 4, 3, 2, 1]
-    merge_sort(collection, 0, len(collection) - 1)
-    assert collection == [1, 2, 3, 4, 5]
+    unsorted_collection = [5, 4, 3, 2, 1]
+    merge_sort(unsorted_collection, 0, len(unsorted_collection) - 1)
+    assert unsorted_collection == [1, 2, 3, 4, 5]
 
-    collection = []
-    merge_sort(collection, 0, len(collection) - 1)
-    assert collection == []
+    unsorted_collection = []
+    merge_sort(unsorted_collection, 0, len(unsorted_collection) - 1)
+    assert unsorted_collection == []
 
-    collection = [5]
-    merge_sort(collection, 0, len(collection) - 1)
-    assert collection == [5]
+    unsorted_collection = [5]
+    merge_sort(unsorted_collection, 0, len(unsorted_collection) - 1)
+    assert unsorted_collection == [5]
 
-    collection = [1, 2, 3, 4, 5]
-    merge_sort(collection, 0, len(collection) - 1)
-    assert collection == [1, 2, 3, 4, 5]
+    unsorted_collection = [1, 2, 3, 4, 5]
+    merge_sort(unsorted_collection, 0, len(unsorted_collection) - 1)
+    assert unsorted_collection == [1, 2, 3, 4, 5]
 
-    collection = [ -1, -2, -3, -4, -5]
-    merge_sort(collection, 0, len(collection) - 1)
-    assert collection == [-5, -4, -3, -2, -1]
+    unsorted_collection = [ -1, -2, -3, -4, -5]
+    merge_sort(unsorted_collection, 0, len(unsorted_collection) - 1)
+    assert unsorted_collection == [-5, -4, -3, -2, -1]
 
-    collection = [5.1, 4.2, 3.3, 2.4, 1.5]
-    merge_sort(collection, 0, len(collection) - 1)
-    assert collection == [1.5, 2.4, 3.3, 4.2, 5.1]
+    unsorted_collection = [5.1, 4.2, 3.3, 2.4, 1.5]
+    merge_sort(unsorted_collection, 0, len(unsorted_collection) - 1)
+    assert unsorted_collection == [1.5, 2.4, 3.3, 4.2, 5.1]
 
-    collection = [1, 2, 3, 4, 5]
-    merge(collection, 0, (len(collection) - 1) // 2, len(collection) - 1)
-    assert collection == [1, 2, 3, 4, 5], collection
+    unsorted_collection = [1, 2, 3, 4, 5]
+    merge(unsorted_collection, 0, (len(unsorted_collection) - 1) // 2, len(unsorted_collection) - 1)
+    assert unsorted_collection == [1, 2, 3, 4, 5], unsorted_collection
 
-    collection = [5, 4, 3, 2, 1]
-    merge(collection, 0, (len(collection) - 1) // 2, len(collection) - 1)
-    assert collection == [2, 1, 5, 4, 3], collection
+    unsorted_collection = [5, 4, 3, 2, 1]
+    merge(unsorted_collection, 0, (len(unsorted_collection) - 1) // 2, len(unsorted_collection) - 1)
+    assert unsorted_collection == [2, 1, 5, 4, 3], unsorted_collection
 
-    collection = []
-    merge(collection, 0, (len(collection) - 1) // 2, len(collection) - 1)
-    assert collection == [], collection
+    unsorted_collection = []
+    merge(unsorted_collection, 0, (len(unsorted_collection) - 1) // 2, len(unsorted_collection) - 1)
+    assert unsorted_collection == [], unsorted_collection
 
-    collection = [1]
-    merge(collection, 0, (len(collection) - 1) // 2, len(collection) - 1)
-    assert collection == [1], collection
+    unsorted_collection = [1]
+    merge(unsorted_collection, 0, (len(unsorted_collection) - 1) // 2, len(unsorted_collection) - 1)
+    assert unsorted_collection == [1], unsorted_collection
 
     for i in range(1000):
         l = sample(range(1000), 10)
